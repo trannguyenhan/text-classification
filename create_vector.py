@@ -59,7 +59,7 @@ def calc_BoW(dictionary, dim):
         doc = open(path_list, "r", encoding = 'utf-8').read()
         arr_doc = doc.split('\n')
 
-        run = 0
+        run = 0 # bien run de gioi han viec lay so bai bao
         for element_doc in arr_doc: # kiem tra tung van ban 
             tf = []
             tf = convert_vector(element_doc, dictionary)
@@ -71,7 +71,7 @@ def calc_BoW(dictionary, dim):
                 write_file_result.write(" " + str(x))
             write_file_result.write("\n")
 
-            if run == 10: # lay 11 bai bao trong moi nhan
+            if run == 10: # lay 11 bai bao trong moi nhan, bang viec chan bien run
                 break
             run += 1
 

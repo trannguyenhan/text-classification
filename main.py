@@ -116,6 +116,10 @@ def cacl_distance(document, vector_list, dictionary, priority_queue):
 
 # bat dau xu ly bo test
 def handling(vector_list, dictionary, priority_queue):
+    # mo file de ghi ket qua
+    path_file = "result/result.txt"
+    write_file_result = open(path_file, "w", encoding = 'utf-8')
+
     # doc file de lay du lieu
     files_doc = open("path_file_dataset.txt", "r", encoding = 'utf-8')
     tmp = files_doc.read().split('\n',1)
@@ -129,7 +133,7 @@ def handling(vector_list, dictionary, priority_queue):
         doc = open(path_list, "r", encoding = 'utf-8').read()
         arr_doc = doc.split('\n')
 
-        run = 0
+        run = 0 # bien run de gioi han viec lay so bai bao
         sum_true = 0
         for element_doc in arr_doc: # kiem tra tung van ban 
             priority_queue = cacl_distance(element_doc, vector_list, dictionary, priority_queue)
@@ -139,14 +143,17 @@ def handling(vector_list, dictionary, priority_queue):
             if type_test == index:
                 sum_true += 1
 
-            if run == 10:
+            if run == 10: # lay 11 bai bao trong moi nhan, bang viec chan bien run
                 break
             run += 1
             
             priority_queue.clear()
         print("Ti le dung cua nhan thu ", index + 1, " la : ", sum_true/11 * 100, "%")
+        write_file_result.write("Ti le dung cua nhan thu " + str(index + 1) + " la : " + str(sum_true/11 * 100) + "%" + "\n")
         index += 1 
         if index == number_of_file: # tranh truong hop doc phai ki tu khong hop le
             break
+        
+    write_file_result.close()
 
 handling(vector_list, dictionary, priority_queue)
