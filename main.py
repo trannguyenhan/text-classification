@@ -63,32 +63,20 @@ def convert_vector(document, dictionary):
 
     return vectorDoc
 
-# get vector
-def getVector():
-    vector_list = []
-    path_file = "dataprocessing/vector/BoW.txt"
-    read_file = open(path_file, "r", encoding = 'utf-8')
-    vector_docs_file = read_file.read()
-
-    vector_list_file = vector_docs_file.split("\n")
-    for target_list in vector_list_file:
-        if target_list == "":
-            break
-
-        array_tmp = target_list.split(" ",1)
-        vector_tmp1 = int(array_tmp[0])
+# chuyen doi vector tu string -> map<int, int>
+def handleVector(vector_non_handle):
+    array_tmp = vector_non_handle.split(" ",1)
+    vector_tmp1 = int(array_tmp[0])
         
-        vector_tmp2 = []
-        string_tmp = array_tmp[1].split(" ")
-        for x in string_tmp:
-            x_tmp = int(x)
-            vector_tmp2.append(x_tmp)
+    vector_tmp2 = []
+    string_tmp = array_tmp[1].split(" ")
+    for x in string_tmp:
+        x_tmp = int(x)
+        vector_tmp2.append(x_tmp)
 
-        item = {"type" : vector_tmp1, "vector" : vector_tmp2}
-        vector_list.append(item)
+    item = {"type" : vector_tmp1, "vector" : vector_tmp2}
         
-    print("Da lay xong vector tu file BoW.txt!")
-    return vector_list
+    return item
 
 """
   bat dau tinh toan
@@ -96,14 +84,22 @@ def getVector():
 # lay du lieu truoc khi tinh toan
 dictionary = {}
 dim = []
-vector_list = []
 priority_queue = []
 dictionary, dim = getDictionary()
-vector_list = getVector()
 
 # dua vao 1 van ban va tra ve [n] phan tu gan nhat trong mang
-def cacl_distance(document, vector_list, dictionary, priority_queue):
-    for x in vector_list:
+# moi lan xet lai doc lai file BoW.txt -> tranh truong hop file BoW qua lon 
+# doc tung dong trong file BoW.txt
+def cacl_distance(document, dictionary, priority_queue):
+    # lay vector
+    vector_list = []
+    path_file = "dataprocessing/vector/BoW.txt"
+    read_file = open(path_file, "r", encoding = 'utf-8')
+
+    vector_string = read_file.readline()
+    while vector_string:
+        x = handleVector(vector_string)
+
         type_document = x["type"]
         point1 = x["vector"]
         point2 = convert_vector(document,dictionary)
@@ -111,11 +107,14 @@ def cacl_distance(document, vector_list, dictionary, priority_queue):
         distance = euclidean_distance(point1, point2)
         item = {"type" : type_document, "value" : distance}
         enqueue(priority_queue, item)
-    
+
+        vector_string = read_file.readline()
+        
+    read_file.close()
     return priority_queue
 
 # bat dau xu ly bo test
-def handling(vector_list, dictionary, priority_queue):
+def handling(dictionary, priority_queue):
     # mo file de ghi ket qua
     path_file = "result/result.txt"
     write_file_result = open(path_file, "w", encoding = 'utf-8')
@@ -136,7 +135,7 @@ def handling(vector_list, dictionary, priority_queue):
         run = 0 # bien run de gioi han viec lay so bai bao
         sum_true = 0
         for element_doc in arr_doc: # kiem tra tung van ban 
-            priority_queue = cacl_distance(element_doc, vector_list, dictionary, priority_queue)
+            priority_queue = cacl_distance(element_doc, dictionary, priority_queue)
             item = priority_queue[0]
             type_test = item["type"]
             
@@ -156,4 +155,5 @@ def handling(vector_list, dictionary, priority_queue):
         
     write_file_result.close()
 
-handling(vector_list, dictionary, priority_queue)
+handling(dictionary, priority_queue)
+
