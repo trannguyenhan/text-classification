@@ -71,9 +71,9 @@ def calc_BoW(dictionary, dim):
                 write_file_result.write(" " + str(x))
             write_file_result.write("\n")
 
-            if run == 10: # get 11 news in each label
-                break
-            run += 1
+            # if run == 10: # get 11 news in each label
+            #     break
+            # run += 1
 
         index += 1 
         if index == number_of_file: # avoid read is invalid characters
