@@ -135,21 +135,24 @@ def handling(vector_list, dictionary, priority_queue):
 
         run = 0 # bien run de gioi han viec lay so bai bao
         sum_true = 0
+        sum_news = 0
         for element_doc in arr_doc: # kiem tra tung van ban 
             priority_queue = cacl_distance(element_doc, vector_list, dictionary, priority_queue)
             item = priority_queue[0]
             type_test = item["type"]
             
+            sum_news += 1
             if type_test == index:
                 sum_true += 1
 
-            # if run == 10: # lay 11 bai bao trong moi nhan, bang viec chan bien run
-            #     break
-            # run += 1
-            
+            if run == 100: # lay 11 bai bao trong moi nhan, bang viec chan bien run
+                break
+            run += 1
             priority_queue.clear()
-        print("Ti le dung cua nhan thu ", index + 1, " la : ", sum_true/11 * 100, "%")
+            
+        print("Ti le dung cua nhan thu ", index + 1, " la : ", sum_true/sum_news * 100, "%")
         write_file_result.write("Ti le dung cua nhan thu " + str(index + 1) + " la : " + str(sum_true/11 * 100) + "%" + "\n")
+
         index += 1 
         if index == number_of_file: # tranh truong hop doc phai ki tu khong hop le
             break

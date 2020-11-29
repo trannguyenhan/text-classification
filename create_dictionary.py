@@ -25,7 +25,7 @@ def ReadFile():
 
         numberOfIndex = 0
         numberOfType = 0
-        while numberOfType < 10:
+        while numberOfType < 40:
             foo = dictionary_sorted[numberOfIndex][0]
             numberOfIndex += 1
             if foo not in dictionary_works:
