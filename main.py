@@ -151,7 +151,7 @@ def handling(vector_list, dictionary, priority_queue):
             priority_queue.clear()
             
         print("Ti le dung cua nhan thu ", index + 1, " la : ", sum_true/sum_news * 100, "%")
-        write_file_result.write("Ti le dung cua nhan thu " + str(index + 1) + " la : " + str(sum_true/11 * 100) + "%" + "\n")
+        write_file_result.write("Ti le dung cua nhan thu " + str(index + 1) + " la : " + str(sum_true/sum_news * 100) + "%" + "\n")
 
         index += 1 
         if index == number_of_file: # tranh truong hop doc phai ki tu khong hop le
