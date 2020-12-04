@@ -1,4 +1,4 @@
-# classify-labels-for-articles
+# classify-labels-for-news
 Classify labels for news with k-nearest-neighbor algorithms <br />
 The data set in the project has been pre-processed :
 <ol>
