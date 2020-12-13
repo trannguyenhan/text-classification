@@ -159,4 +159,34 @@ def handling(vector_list, dictionary, priority_queue):
         
     write_file_result.close()
 
+P = [0,0,0,0,0,0,0,0,0,0]
+
 handling(vector_list, dictionary, priority_queue)
+# files_doc = open("path_file_dataset.txt", "r", encoding = 'utf-8')
+# tmp = files_doc.read().split('\n',1)
+# number_of_file = tmp[0] # lay so luong nhan
+# file_doc = tmp[1].split('\n') # lay ten cua tung nhan
+
+# index = 0
+# for path_list in file_doc: # kiem tra tung loai van ban
+#     # doc du lieu tu van ban
+#     path_list = "dataset/train/" + path_list
+#     doc = open(path_list, "r", encoding = 'utf-8').read()
+#     arr_doc = doc.split('\n')
+
+#     for element_doc in arr_doc: # kiem tra tung van ban 
+#         P[index] += 1
+#     index += 1
+#     print(P)
+
+# index = 0
+# for path_list in file_doc: # kiem tra tung loai van ban
+#     # doc du lieu tu van ban
+#     path_list = "dataset/test/" + path_list
+#     doc = open(path_list, "r", encoding = 'utf-8').read()
+#     arr_doc = doc.split('\n')
+
+#     for element_doc in arr_doc: # kiem tra tung van ban 
+#         P[index] += 1
+#     index += 1
+#     print(P)
