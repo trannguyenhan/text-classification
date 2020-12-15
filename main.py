@@ -116,6 +116,8 @@ def cacl_distance(document, vector_list, dictionary, priority_queue):
 
 # bat dau xu ly bo test
 def handling(vector_list, dictionary, priority_queue):
+    P = []
+
     # mo file de ghi ket qua
     path_file = "result/result.txt"
     write_file_result = open(path_file, "w", encoding = 'utf-8')
@@ -136,6 +138,7 @@ def handling(vector_list, dictionary, priority_queue):
         run = 0 # bien run de gioi han viec lay so bai bao
         sum_true = 0
         sum_news = 0
+        P_each = [0,0,0,0,0,0,0,0,0,0]
         for element_doc in arr_doc: # kiem tra tung van ban 
             priority_queue = cacl_distance(element_doc, vector_list, dictionary, priority_queue)
             item = priority_queue[0]
@@ -145,48 +148,26 @@ def handling(vector_list, dictionary, priority_queue):
             if type_test == index:
                 sum_true += 1
 
-            if run == 100: # lay 11 bai bao trong moi nhan, bang viec chan bien run
-                break
-            run += 1
+            P_each[type_test] += 1 # van ban nhan type_test duoc phan vao nhan index
+
+            # if run == 10: # lay 11 bai bao trong moi nhan, bang viec chan bien run
+            #     break
+            # run += 1
             priority_queue.clear()
-            
+        
+        P.append(P_each)
+        # in ra ty le phan loai dung cho tung nhan
         print("Ti le dung cua nhan thu ", index + 1, " la : ", sum_true/sum_news * 100, "%")
-        write_file_result.write("Ti le dung cua nhan thu " + str(index + 1) + " la : " + str(sum_true/sum_news * 100) + "%" + "\n")
 
         index += 1 
         if index == number_of_file: # tranh truong hop doc phai ki tu khong hop le
             break
-        
+
+    # in ra ma tran ket qua     
+    for target in P:
+        for v in target : 
+            write_file_result.write(str(v) + " ")
+        write_file_result.write("\n")
     write_file_result.close()
 
-P = [0,0,0,0,0,0,0,0,0,0]
-
 handling(vector_list, dictionary, priority_queue)
-# files_doc = open("path_file_dataset.txt", "r", encoding = 'utf-8')
-# tmp = files_doc.read().split('\n',1)
-# number_of_file = tmp[0] # lay so luong nhan
-# file_doc = tmp[1].split('\n') # lay ten cua tung nhan
-
-# index = 0
-# for path_list in file_doc: # kiem tra tung loai van ban
-#     # doc du lieu tu van ban
-#     path_list = "dataset/train/" + path_list
-#     doc = open(path_list, "r", encoding = 'utf-8').read()
-#     arr_doc = doc.split('\n')
-
-#     for element_doc in arr_doc: # kiem tra tung van ban 
-#         P[index] += 1
-#     index += 1
-#     print(P)
-
-# index = 0
-# for path_list in file_doc: # kiem tra tung loai van ban
-#     # doc du lieu tu van ban
-#     path_list = "dataset/test/" + path_list
-#     doc = open(path_list, "r", encoding = 'utf-8').read()
-#     arr_doc = doc.split('\n')
-
-#     for element_doc in arr_doc: # kiem tra tung van ban 
-#         P[index] += 1
-#     index += 1
-#     print(P)
